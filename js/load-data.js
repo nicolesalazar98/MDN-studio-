@@ -2,10 +2,10 @@
 window.onload = () => {
   loadAllSongs();
 };
-
+let audioPanelIzquierdo;
 // la clase constructora ya tiene definido los parametros de entrada
 class Song {
-  constructor(id, title, artist, duration, album, year, gender, cover, urlSong) {
+  constructor(id, title, artist, duration, album, year, gender, urlSong, cover) {
     this.id = id;
     this.title = title;
     this.artist = artist;
@@ -13,19 +13,20 @@ class Song {
     this.album = album;
     this.year = year;
     this.gender = gender;
-    this.cover = cover;
     this.urlSong = urlSong;
-    this.album = album;
+    this.cover = cover;
   }
 }
 // en la variable SONGS instanciamos 2 objetos de prueba con los valores necesarios
 // no es necesario definir nuevamente los atributos, va solo los valores en el constructor
 const SONGS = [
-  new Song('1', 'Lost on you', 'Lp', null, 'Lost on you', '2016', 'Indie-rock', '1lostOnYouCover.jpg', '1lostOnYouCover.mp3'),
-  new Song('2', 'Melancolicasong2', 'Lp', null, 'Lost on you', '2016', 'Indie-rock', '2lostOnYouCover.jpg', '2lostOnYouCover.mp3'),
+  new Song('1', 'Somebody That I Used To Know (feat. Kimbra)', 'Gotye', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('2', 'Reality', 'Lost Frequencies', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion2-cover.jpg'),
+  new Song('3', 'Cant Get You out of My Head (Cover)', 'AnnenMayKantereit x Parcels', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
 ];
 
 const MAIN_SONG_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
+const MAIN_PLAYLIST_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-minus'];
 
 function loadAllSongs() {
   // tomar lista principal de canciones
@@ -41,6 +42,7 @@ function loadAllSongs() {
     // crear elemento button para el boton de reproduccion y agregarlo al li
     MAIN_SONG_ICONS.forEach((iconClass) => {
       const icon = document.createElement('i');
+      icon.id = song.id;
       icon.className = iconClass;
       // agregar evento
       icon.addEventListener('click', () => handleIconClick(song, iconClass));
@@ -54,16 +56,74 @@ function loadAllSongs() {
 
 function handleIconClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
-    alert('reproducir cancion ' + song.title);
-    return;
-  }
-
-  if (iconClass === 'fa fa-heart') {
+    // validar si existe una reproduccion
+    if (audioPanelIzquierdo) {
+      audioPanelIzquierdo.pause();
+      audioPanelIzquierdo.currentTime = 0;
+    }
+    audioPanelIzquierdo = new Audio(song.urlSong);
+    song.currentTime = audioPanelIzquierdo.currentTime;
+    audioPanelIzquierdo.volume = 0.2;
+    audioPanelIzquierdo.play();
+  } else if (iconClass === 'fa fa-heart') {
     alert('agregar a favoritos ' + song.title);
-    return;
+  } else {
+    const list = document.getElementById('my_playlist');
+    // agregar al playlista si no existe la cancion en la lista
+    if (list.children.length === 0) {
+      agregarAPlayList(song, list);
+    } else {
+      let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+      if (!existeCancion) {
+        agregarAPlayList(song, list);
+      }
+    }
   }
+}
 
-  alert('agregar a mi lista de reproduccion ' + song.title);
+function agregarAPlayList(song, list) {
+  const songElement = document.createElement('li');
+  songElement.id = song.id;
+  songElement.className = 'song';
+  // crear elemento strong para el titulo de la cancion y agregarlo al li
+  const songTitle = document.createElement('strong');
+  songTitle.innerHTML = song.title;
+  songElement.appendChild(songTitle);
+  MAIN_PLAYLIST_ICONS.forEach((iconClass) => {
+    const icon = document.createElement('i');
+    icon.id = song.id;
+    icon.className = iconClass;
+    // agregar evento
+    icon.addEventListener('click', () => handleIconPlayListClick(song, iconClass));
+    // agregar icono al li
+    songElement.appendChild(icon);
+  });
+  // agregar li al ul principal de canciones
+  list.appendChild(songElement);
+}
+
+function handleIconPlayListClick(song, iconClass) {
+  if (iconClass === 'fa fa-play-circle') {
+    // validar si existe una reproduccion
+    if (audioPanelIzquierdo) {
+      audioPanelIzquierdo.pause();
+      audioPanelIzquierdo.currentTime = 0;
+    }
+    audioPanelIzquierdo = new Audio(song.urlSong);
+    song.currentTime = audioPanelIzquierdo.currentTime;
+    audioPanelIzquierdo.volume = 0.2;
+    audioPanelIzquierdo.play();
+  } else if (iconClass === 'fa fa-heart') {
+    alert('agregar a favoritos ' + song.title);
+  } else {
+    const list = document.getElementById('my_playlist');
+    // eliminar del playlist
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (existeCancion) {
+      // eliminar de la lista la cancion
+      list.removeChild(existeCancion);
+    }
+  }
 }
 
 
@@ -100,23 +160,16 @@ sound.addEventListener('click', () => {
   audio.volume = 0.1
 })
 
-search.addEventListener('click', () => {
-  audio.src = input.value
-})
+// search.addEventListener('click', () => {
+//   audio.src = input.value
+// })
 
 audio.addEventListener('ended', () => {
   alert('siguiente')
   audio.src = 'https://cdn.pixabay.com/audio/2024/01/16/audio_e2b992254f.mp3'
   audio.play()
-})
-
-
-
-let miAudio = document.getElementById("miAudio");
-miAudio.pause();
-miAudio.currentTime = 0;
-
+});
 
 stop.addEventListener('click', () => {
   audio.stop
-})
+});
