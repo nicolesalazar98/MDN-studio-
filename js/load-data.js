@@ -3,9 +3,9 @@ window.onload = () => {
   loadAllSongs();
 };
 
+// la clase constructora ya tiene definido los parametros de entrada
 class Song {
-
-  constructor (id, title, artist, duration, album, year, gender, cover, urlSong) {
+  constructor(id, title, artist, duration, album, year, gender, cover, urlSong) {
     this.id = id;
     this.title = title;
     this.artist = artist;
@@ -18,66 +18,19 @@ class Song {
     this.album = album;
   }
 }
-// const SONGS = [
-//   new Song ({
-//     id: '1',
-//     title: 'Lost on you',
-//     artist: 'Lp',
-//     duration: null,
-//     album: 'Lost on you',
-//     year: '2016',
-//     gender: 'Indie-rock',
-//     cover: '1lostOnYouCover.jpg',
-//     urlSong: '1lostOnYouCover.mp3'
-//   }),
-//   new Song ({
-//     id: '2',
-//     title: 'Melancolicasong2',
-//     artist: 'Lp',
-//     duration: null,
-//     album: 'Lost on you',
-//     year: '2016',
-//     gender: 'Indie-rock',
-//     cover: '2lostOnYouCover.jpg',
-//     urlSong: '2lostOnYouCover.mp3'
-//   }),
-
-// ];
-
+// en la variable SONGS instanciamos 2 objetos de prueba con los valores necesarios
+// no es necesario definir nuevamente los atributos, va solo los valores en el constructor
 const SONGS = [
-  {
-    id: '1',
-    title: 'Lost on you',
-    artist: 'Lp',
-    duration: null,
-    album: 'Lost on you',
-    year: '2016',
-    gender: 'Indie-rock',
-    cover: '1lostOnYouCover.jpg',
-    urlSong: '1lostOnYouCover.mp3'
-  },
-  {
-    id: '2',
-    title: 'Melancolicasong2',
-    artist: 'Lp',
-    duration: null,
-    album: 'Lost on you',
-    year: '2016',
-    gender: 'Indie-rock',
-    cover: '2lostOnYouCover.jpg',
-    urlSong: '2lostOnYouCover.mp3'
-  }
-
+  new Song('1', 'Lost on you', 'Lp', null, 'Lost on you', '2016', 'Indie-rock', '1lostOnYouCover.jpg', '1lostOnYouCover.mp3'),
+  new Song('2', 'Melancolicasong2', 'Lp', null, 'Lost on you', '2016', 'Indie-rock', '2lostOnYouCover.jpg', '2lostOnYouCover.mp3'),
 ];
 
-const MAIN_SONG_ICONS = ['far fa-play-circle', 'far fa-heart', 'fa fa-solid fa-plus'];
+const MAIN_SONG_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
 
 function loadAllSongs() {
   // tomar lista principal de canciones
   const list = document.getElementById('main_song_list');
-
   SONGS.forEach((song) => {
-    debugger
     // crear elemento li para cada cancion
     const songElement = document.createElement('li');
     songElement.className = 'song';
@@ -100,13 +53,13 @@ function loadAllSongs() {
 }
 
 function handleIconClick(song, iconClass) {
-  if (iconClass === 'far fa-play-circle') {
-    alert('reproducir cancion ' + song.name);
+  if (iconClass === 'fa fa-play-circle') {
+    alert('reproducir cancion ' + song.title);
     return;
   }
 
-  if (iconClass === 'far fa-heart') {
-    alert('agregar a favoritos ' + song.name);
+  if (iconClass === 'fa fa-heart') {
+    alert('agregar a favoritos ' + song.title);
     return;
   }
 
@@ -161,9 +114,9 @@ audio.addEventListener('ended', () => {
 
 let miAudio = document.getElementById("miAudio");
 miAudio.pause();
-miAudio.currentTime = 0; 
+miAudio.currentTime = 0;
 
 
 stop.addEventListener('click', () => {
   audio.stop
-} )
+})
