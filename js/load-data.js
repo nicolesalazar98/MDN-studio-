@@ -3,67 +3,71 @@ window.onload = () => {
   loadAllSongs();
 };
 
+class Song {
+
+  constructor (id, title, artist, duration, album, year, gender, cover, urlSong) {
+    this.id = id;
+    this.title = title;
+    this.artist = artist;
+    this.duration = duration;
+    this.album = album;
+    this.year = year;
+    this.gender = gender;
+    this.cover = cover;
+    this.urlSong = urlSong;
+    this.album = album;
+  }
+}
+// const SONGS = [
+//   new Song ({
+//     id: '1',
+//     title: 'Lost on you',
+//     artist: 'Lp',
+//     duration: null,
+//     album: 'Lost on you',
+//     year: '2016',
+//     gender: 'Indie-rock',
+//     cover: '1lostOnYouCover.jpg',
+//     urlSong: '1lostOnYouCover.mp3'
+//   }),
+//   new Song ({
+//     id: '2',
+//     title: 'Melancolicasong2',
+//     artist: 'Lp',
+//     duration: null,
+//     album: 'Lost on you',
+//     year: '2016',
+//     gender: 'Indie-rock',
+//     cover: '2lostOnYouCover.jpg',
+//     urlSong: '2lostOnYouCover.mp3'
+//   }),
+
+// ];
+
 const SONGS = [
   {
-    name: 'Bohemian Rhapsody',
+    id: '1',
+    title: 'Lost on you',
+    artist: 'Lp',
+    duration: null,
+    album: 'Lost on you',
+    year: '2016',
+    gender: 'Indie-rock',
+    cover: '1lostOnYouCover.jpg',
+    urlSong: '1lostOnYouCover.mp3'
   },
   {
-    name: 'Stairway to Heaven',
-  },
-  {
-    name: 'Imagine',
-  },
-  {
-    name: 'Hotel California',
-  },
-  {
-    name: 'Hey Jude',
-  },
-  {
-    name: 'Smells Like Teen Spirit',
-  },
-  {
-    name: 'Wonderwall',
-  },
-  {
-    name: 'Sweet Child o Mine',
-  },
-  {
-    name: 'Like a Rolling Stone',
-  },
-  {
-    name: 'Thriller',
-  },
-  {
-    name: 'Billie Jean',
-  },
-  {
-    name: 'No Woman, No Cry',
-  },
-  {
-    name: 'Hallelujah',
-  },
-  {
-    name: 'Hey Ya!',
-  },
-  {
-    name: 'Born to Run',
-  },
-  {
-    name: 'Purple Haze',
-  },
-  {
-    name: 'Losing My Religion',
-  },
-  {
-    name: 'Do not Stop Believin',
-  },
-  {
-    name: 'Yesterday',
-  },
-  {
-    name: 'I Will Always Love You',
-  },
+    id: '2',
+    title: 'Melancolicasong2',
+    artist: 'Lp',
+    duration: null,
+    album: 'Lost on you',
+    year: '2016',
+    gender: 'Indie-rock',
+    cover: '2lostOnYouCover.jpg',
+    urlSong: '2lostOnYouCover.mp3'
+  }
+
 ];
 
 const MAIN_SONG_ICONS = ['far fa-play-circle', 'far fa-heart', 'fa fa-solid fa-plus'];
@@ -73,12 +77,13 @@ function loadAllSongs() {
   const list = document.getElementById('main_song_list');
 
   SONGS.forEach((song) => {
+    debugger
     // crear elemento li para cada cancion
     const songElement = document.createElement('li');
     songElement.className = 'song';
     // crear elemento strong para el titulo de la cancion y agregarlo al li
     const songTitle = document.createElement('strong');
-    songTitle.innerHTML = song.name;
+    songTitle.innerHTML = song.title;
     songElement.appendChild(songTitle);
     // crear elemento button para el boton de reproduccion y agregarlo al li
     MAIN_SONG_ICONS.forEach((iconClass) => {
