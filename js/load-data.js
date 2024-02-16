@@ -54,29 +54,29 @@ function loadAllSongs() {
   });
 }
 
+function playSongSelected(song) {
+  // validar si existe una reproduccion
+  if (audioPanelIzquierdo) {
+    audioPanelIzquierdo.pause();
+    audioPanelIzquierdo.currentTime = 0;
+  }
+  audioPanelIzquierdo = new Audio(song.urlSong);
+  song.currentTime = audioPanelIzquierdo.currentTime;
+  audioPanelIzquierdo.volume = 0.2;
+  audioPanelIzquierdo.play();
+}
+
 function handleIconClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
-    // validar si existe una reproduccion
-    if (audioPanelIzquierdo) {
-      audioPanelIzquierdo.pause();
-      audioPanelIzquierdo.currentTime = 0;
-    }
-    audioPanelIzquierdo = new Audio(song.urlSong);
-    song.currentTime = audioPanelIzquierdo.currentTime;
-    audioPanelIzquierdo.volume = 0.2;
-    audioPanelIzquierdo.play();
+    playSongSelected(song);
   } else if (iconClass === 'fa fa-heart') {
     alert('agregar a favoritos ' + song.title);
   } else {
     const list = document.getElementById('my_playlist');
     // agregar al playlista si no existe la cancion en la lista
-    if (list.children.length === 0) {
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (!existeCancion) {
       agregarAPlayList(song, list);
-    } else {
-      let existeCancion = Array.from(list.children).find(child => child.id === song.id);
-      if (!existeCancion) {
-        agregarAPlayList(song, list);
-      }
     }
   }
 }
@@ -104,15 +104,7 @@ function agregarAPlayList(song, list) {
 
 function handleIconPlayListClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
-    // validar si existe una reproduccion
-    if (audioPanelIzquierdo) {
-      audioPanelIzquierdo.pause();
-      audioPanelIzquierdo.currentTime = 0;
-    }
-    audioPanelIzquierdo = new Audio(song.urlSong);
-    song.currentTime = audioPanelIzquierdo.currentTime;
-    audioPanelIzquierdo.volume = 0.2;
-    audioPanelIzquierdo.play();
+    playSongSelected(song);
   } else if (iconClass === 'fa fa-heart') {
     alert('agregar a favoritos ' + song.title);
   } else {
