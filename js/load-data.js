@@ -20,9 +20,37 @@ class Song {
 // en la variable SONGS instanciamos 2 objetos de prueba con los valores necesarios
 // no es necesario definir nuevamente los atributos, va solo los valores en el constructor
 const SONGS = [
-  new Song('1', 'Somebody That I Used To Know (feat. Kimbra)', 'Gotye', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
-  new Song('2', 'Reality', 'Lost Frequencies', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion2-cover.jpg'),
-  new Song('3', 'Cant Get You out of My Head (Cover)', 'AnnenMayKantereit x Parcels', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('1', 'Take On Me', 'a-ha', null, 'Hunting High and Low', 1985, 'Synth pop, New wave', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('2', 'Azul', 'Zoe', null, 'Aztlán', 2018, 'Alternativa/independiente, Rock en español, Argentinian Rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('3', 'Kahalid-Lovely', 'Billie Eilish', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('4', 'Cant Get You out of My Head (Cover)', 'AnnenMayKantereit x Parcels', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('5', 'De la noche a la mañana', 'Elefante', null, 'El que busca encuentra', 2012, 'Funk, Electropop, Disco', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('6', 'Boyfriend', 'Dove Cameron', null, 'Summer Viral Hits 2022', 2022, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('7', 'EME', 'Bardo José, Miel', null, 'EME', 2021, 'Dance-electronica', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  //aqui me quede
+  new Song('8', 'Somebody That I Used To Know (feat. Kimbra)', 'Gotye', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('9', 'Super Lady', 'GI-DLE', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('10','Hasta la raiz', 'Natalia Fourcade', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
+  new Song('11','I hate you I love you', 'Gnash', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion2-cover.jpg'),
+  new Song('12','IU(아이유)', 'eight(에잇)', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
+  new Song('13', 'Love', 'IVE 아이브', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('14', 'Peaches', 'Jack Black', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('15', 'Mi traicionero amor', 'Jarawi', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('16', 'Todos tenemos un amor', 'La mosca Tse-Tse', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('17', 'Lo malo de ser bueno', 'Cuarteto de nos', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('18', 'Lost on you', 'LP', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('19', 'Starry Night', 'MAMAMOO(마마무) ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('20', 'While Your Lips Are Still Red', 'Nightwish', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('21', 'Payphone', 'Maroon 5 ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('22', 'Photograph', 'Ed Sheeran ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('23', 'Reflexiones', 'Esto es eso ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('24', 'Lonely Day', 'System Of A Down ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('25', 'INVU', 'TAEYEON 태연 ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('26', 'In Hell I ll Be In Good Company', 'The Dead South ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('27', 'Tu falta de querer ', 'Mon Laferte ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('28', 'Inside Out', 'Zedd, Griff', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('29', 'In Hell Ill Be In Good Company', 'The Dead South ', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
+  new Song('30', 'Reality', 'Lost Frequencies', null, 'Remix', 2015, 'Pop', 'assets/music/Reality.mp3', 'cancion4-cover.jpg'),
 ];
 
 const MAIN_SONG_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
