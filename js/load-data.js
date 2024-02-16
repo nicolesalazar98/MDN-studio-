@@ -63,7 +63,7 @@ function handleIconClick(song, iconClass) {
     return;
   }
 
-  alert('agregar a mi lista de reproduccion ' + song.name);
+  alert('agregar a mi lista de reproduccion ' + song.title);
 }
 
 
