@@ -54,6 +54,7 @@ const SONGS = [
 
 const MAIN_SONG_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
 const MAIN_PLAYLIST_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-minus'];
+const MAIN_FAVORITOS_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
 
 function loadAllSongs() {
   // tomar lista principal de canciones
@@ -138,6 +139,28 @@ function agregarAPlayList(song, list) {
   // agregar li al ul principal de canciones
   list.appendChild(songElement);
 }
+
+function agregarAFavoritos(song, list) {
+  const songElement = document.createElement('li');
+  songElement.id = song.id;
+  songElement.className = 'song';
+  // crear elemento strong para el titulo de la cancion y agregarlo al li
+  const songTitle = document.createElement('strong');
+  songTitle.innerHTML = song.title;
+  songElement.appendChild(songTitle);
+  MAIN_FAVORITOS_ICONS.forEach((iconClass) => {
+    const icon = document.createElement('i');
+    icon.id = song.id;
+    icon.className = iconClass;
+    // agregar evento
+    icon.addEventListener('click', () => handleIconPlayListClick(song, iconClass));
+    // agregar icono al li
+    songElement.appendChild(icon);
+  });
+  // agregar li al ul principal de canciones
+  list.appendChild(songElement);
+}
+
 
 function handleIconPlayListClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
