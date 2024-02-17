@@ -2,7 +2,7 @@
 window.onload = () => {
   loadAllSongs();
 };
-let audioPanelIzquierdo;
+let audioMp3;
 // la clase constructora ya tiene definido los parametros de entrada
 class Song {
   constructor(id, title, artist, duration, album, year, gender, urlSong, cover) {
@@ -29,9 +29,9 @@ const SONGS = [
   new Song('7', 'EME', 'Bardo José, Miel', null, 'EME', 2021, 'Dance-electronica', 'assets/music/7EME-miel.mp3', 'assets/principlesImages/7EME -miel.jpg.jpg'),
   new Song('8', 'Somebody That I Used To Know (feat. Kimbra)', 'Gotye', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/9Gotye-Somebody-That-I-Used-To-Know.mp3', 'cancion1-cover.jpg'),
   new Song('9', 'Super Lady', 'GI-DLE', null, 'Remix', 2019, 'Indie-rock', 'assets/music/8G-IDLE - Super Lady.mp3', 'assets/principlesImages/8G)I-DLE) - Super Lady.jpeg'),
-  new Song('10','Hasta la raiz', 'Natalia Fourcade', null, 'Remix', 2019, 'Indie-rock', 'assets/music/10Hasta la raiz -Natalia lafourcade.mp3', 'assets/principlesImages/hastaraiz-16b.jpg.jpg'),
-  new Song('11','I hate you I love you', 'Gnash', null, 'Remix', 2015, 'Pop', 'assets/music/11 hate you, I love you -gnash.mp3', 'assets/principlesImages/i hate you i love you.jpg'),
-  new Song('12','IU(아이유)', 'eight(에잇)', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/12IU_eight.mp3', 'assets/principlesImages/12IU(아이유) _ eight(에잇).jpg'),
+  new Song('10', 'Hasta la raiz', 'Natalia Fourcade', null, 'Remix', 2019, 'Indie-rock', 'assets/music/10Hasta la raiz -Natalia lafourcade.mp3', 'assets/principlesImages/hastaraiz-16b.jpg.jpg'),
+  new Song('11', 'I hate you I love you', 'Gnash', null, 'Remix', 2015, 'Pop', 'assets/music/11 hate you, I love you -gnash.mp3', 'assets/principlesImages/i hate you i love you.jpg'),
+  new Song('12', 'IU(아이유)', 'eight(에잇)', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/12IU_eight.mp3', 'assets/principlesImages/12IU(아이유) _ eight(에잇).jpg'),
   new Song('13', 'Love', 'IVE 아이브', null, 'Remix', 2015, 'Pop', 'assets/music/13IVELOVE.mp3', 'assets/principlesImages/love dive.jpg'),
   new Song('14', 'Peaches', 'Jack Black', null, 'Remix', 2015, 'Pop', 'assets/music/14Jack Black Peaches.mp3', 'assets/principlesImages/14Jack Black-Peaches.jpg'),
   new Song('15', 'Mi traicionero amor', 'Jarawi', null, 'Remix', 2015, 'Pop', 'assets/music/15Jarawi - Mi traicionero amor.mp3', 'assets/principlesImages/15jirawi.jpg'),
@@ -83,14 +83,24 @@ function loadAllSongs() {
 
 function playSongSelected(song) {
   // validar si existe una reproduccion
-  if (audioPanelIzquierdo) {
-    audioPanelIzquierdo.pause();
-    audioPanelIzquierdo.currentTime = 0;
+  if (audioMp3) {
+    audioMp3.pause();
+    audioMp3.currentTime = 0;
   }
-  audioPanelIzquierdo = new Audio(song.urlSong);
-  song.currentTime = audioPanelIzquierdo.currentTime;
-  audioPanelIzquierdo.volume = 0.2;
-  audioPanelIzquierdo.play();
+  audioMp3 = new Audio(song.urlSong);
+  audioMp3.addEventListener('loadedmetadata', function () {
+    // Obtener la duración de la canción
+    song.currentTime = audioMp3.duration;//currentTime
+  });
+  audioMp3.volume = 0.2;
+  audioMp3.play();
+  // mostrar informacion cancion
+  const artist = document.getElementById('artist');
+  artist.innerHTML = song.artist;
+  const actualSong = document.getElementById('song');
+  actualSong.innerHTML = song.title;
+  const currentTime = document.getElementById('currentTime');
+  currentTime.innerHTML = song.currentTime;
 }
 
 function handleIconClick(song, iconClass) {
@@ -146,49 +156,44 @@ function handleIconPlayListClick(song, iconClass) {
 }
 
 
-const audio = new Audio('https://cdn.pixabay.com/audio/2024/01/15/audio_9914e58808.mp3')
-audio.volume = 0.1
-audio.currentTime = 245
-
-
 const play = document.getElementById('play')
-const play2 = document.getElementById('play')
 const stop = document.getElementById('stop')
 const pause = document.getElementById('pause')
 const mute = document.getElementById('mute')
 const sound = document.getElementById('sound')
 
 play.addEventListener('click', () => {
-  audio.play()
+  audioMp3.play()
 })
 
-play2.addEventListener('click', () => {
-  audio.play()
+stop.addEventListener('click', () => {
+  audioMp3.pause();
+  audioMp3.currentTime = 0;
 })
 
 
 pause.addEventListener('click', () => {
-  audio.pause()
+  audioMp3.pause()
 })
 
 mute.addEventListener('click', () => {
-  audio.volume = 0
+  audioMp3.volume = 0
 })
 
 sound.addEventListener('click', () => {
-  audio.volume = 0.1
+  audioMp3.volume = audioMp3.volume + 0.1;
 })
 
 // search.addEventListener('click', () => {
 //   audio.src = input.value
 // })
 
-audio.addEventListener('ended', () => {
-  alert('siguiente')
-  audio.src = 'https://cdn.pixabay.com/audio/2024/01/16/audio_e2b992254f.mp3'
-  audio.play()
-});
+// audio.addEventListener('ended', () => {
+//   alert('siguiente')
+//   audio.src = 'https://cdn.pixabay.com/audio/2024/01/16/audio_e2b992254f.mp3'
+//   audio.play()
+// });
 
-stop.addEventListener('click', () => {
-  audio.stop
-});
+// stop.addEventListener('click', () => {
+//   audio.stop
+// });
