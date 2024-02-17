@@ -20,14 +20,13 @@ class Song {
 // en la variable SONGS instanciamos 2 objetos de prueba con los valores necesarios
 // no es necesario definir nuevamente los atributos, va solo los valores en el constructor
 const SONGS = [
-  new Song('1', 'Take On Me', 'a-ha', null, 'Hunting High and Low', 1985, 'Synth pop, New wave', 'assets/music/1A-ha - Take On Me.mp3', 'cancion1-cover.jpg'),
-  new Song('2', 'Azul', 'Zoe', null, 'Aztlán', 2018, 'Alternativa/independiente, Rock en español, Argentinian Rock', 'assets/music/.2Azul -Zoé.mp3', 'cancion1-cover.jpg'),
-  new Song('3', 'Kahalid-Lovely', 'Billie Eilish', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/3Billie Eilish, Khalid ,lovely', 'cancion1-cover.jpg'),
+  new Song('1', 'Take On Me', 'a-ha', null, 'Hunting High and Low', 1985, 'Synth pop, New wave', 'assets/music/1A-ha - Take On Me.mp3', 'assets\principlesImages\1a-ha - Take On Me.jpg'),
+  new Song('2', 'Azul', 'Zoe', null, 'Aztlán', 2018, 'Alternativa/independiente, Rock en español, Argentinian Rock', 'assets/music/.2Azul -Zoé.mp3', 'assets\principlesImages\2zoe_azul-portada.jpg'),
+  new Song('3', 'Kahalid-Lovely', 'Billie Eilish', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/3Billie Eilish, Khalid ,lovely', 'assets\principlesImages\love dive.jpg'),
   new Song('4', 'Cant Get You out of My Head (Cover)', 'AnnenMayKantereit x Parcels', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'cancion3-cover.jpg'),
   new Song('5', 'De la noche a la mañana', 'Elefante', null, 'El que busca encuentra', 2012, 'Funk, Electropop, Disco', 'assets/music/5De la noche a la mañana -Elefante.mp3', 'cancion3-cover.jpg'),
   new Song('6', 'Boyfriend', 'Dove Cameron', null, 'Summer Viral Hits 2022', 2022, 'Indie-rock', '6Dove Cameron, Boyfriend.mp3', 'cancion3-cover.jpg'),
   new Song('7', 'EME', 'Bardo José, Miel', null, 'EME', 2021, 'Dance-electronica', 'assets/music/7EME -miel.mp3', 'cancion3-cover.jpg'),
-  //aqui me quede
   new Song('8', 'Somebody That I Used To Know (feat. Kimbra)', 'Gotye', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/9Gotye - Somebody That I Used To Know.mp3', 'cancion1-cover.jpg'),
   new Song('9', 'Super Lady', 'GI-DLE', null, 'Remix', 2019, 'Indie-rock', 'assets/music/8G-IDLE - Super Lady.mp3', 'cancion3-cover.jpg'),
   new Song('10','Hasta la raiz', 'Natalia Fourcade', null, 'Remix', 2019, 'Indie-rock', 'assets/music/10Hasta la raíz -Natalia lafourcade.mp3', 'cancion3-cover.jpg'),
