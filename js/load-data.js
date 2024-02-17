@@ -3,6 +3,7 @@ window.onload = () => {
   loadAllSongs();
 };
 let audioMp3;
+let selectedSong;
 // la clase constructora ya tiene definido los parametros de entrada
 class Song {
   constructor(id, title, artist, duration, album, year, gender, urlSong, cover) {
@@ -20,7 +21,7 @@ class Song {
 // en la variable SONGS instanciamos 2 objetos de prueba con los valores necesarios
 // no es necesario definir nuevamente los atributos, va solo los valores en el constructor
 const SONGS = [
-  new Song('1', 'Take On Me', 'a-ha', null, 'Hunting High and Low', 1985, 'Synth pop, New wave', 'assets/music/1A-ha-Take-On-Me.mp3', 'assets/principlesImages/1a-ha - Take On Me.jpg'),
+  new Song('1', 'Take On Me', 'a-ha', null, 'Hunting High and Low', 1985, 'Synth pop, New wave', 'assets/music/1A-ha-Take-On-Me.mp3', 'assets/principlesImages/1a-ha-TakeOnMe.jpg'),
   new Song('2', 'Azul', 'Zoe', null, 'Aztlan', 2018, 'Alternativa/independiente, Rock en español, Argentinian Rock', 'assets/music/2Azul-Zoe.mp3', 'assets/principlesImages/2zoe_azul-portada.jpg'),
   new Song('3', 'Kahalid-Lovely', 'Billie Eilish', null, 'Making Mirrors', 2011, 'Indie-rock', 'assets/music/3Billie-Eilish_-Khalid-_lovely.mp3', 'assets/principlesImages/love dive.jpg'),
   new Song('4', 'Cant Get You out of My Head (Cover)', 'AnnenMayKantereit x Parcels', null, 'Remix', 2019, 'Indie-rock', 'assets/music/Cant Get You out of My Head (Cover).mp3', 'assets/principlesImages/Cant Get You out of My Head (Cover) AnnenMayKantereit x Parcels.jpg'),
@@ -54,8 +55,9 @@ const SONGS = [
 
 const MAIN_SONG_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
 const MAIN_PLAYLIST_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-minus'];
-const MAIN_FAVORITOS_ICONS = ['fa fa-play-circle', 'fa fa-heart', 'fa fa-solid fa-plus'];
+const MAIN_FAVORITOS_ICONS = ['fa fa-play-circle', 'fa fa-heart-o', 'fa fa-solid fa-plus'];
 
+// leer todas las canciones
 function loadAllSongs() {
   // tomar lista principal de canciones
   const list = document.getElementById('main_song_list');
@@ -82,20 +84,38 @@ function loadAllSongs() {
   });
 }
 
+// tocar cancion
 function playSongSelected(song) {
+  selectedSong = song;
   // validar si existe una reproduccion
   if (audioMp3) {
     audioMp3.pause();
     audioMp3.currentTime = 0;
   }
   audioMp3 = new Audio(song.urlSong);
-  audioMp3.addEventListener('loadedmetadata', function () {
-    // Obtener la duración de la canción
-    song.currentTime = audioMp3.duration;//currentTime
-  });
-  audioMp3.volume = 0.2;
+  // preguntar q mostrar tiempo transcurrido o tiempo total de la cancion
+  // audioMp3.addEventListener('loadedmetadata', function () {
+  //   // Obtener la duración de la canción
+  //   song.currentTime = audioMp3.duration;//currentTime
+  // });
+  song.currentTime = audioMp3.duration;
+  audioMp3.volume = 0.5;
   audioMp3.play();
   // mostrar informacion cancion
+  // seccion cover
+  const imgAlbum = document.getElementById('imgAlbum');
+  imgAlbum.src = song.cover;
+  const reaccion = document.getElementById('reaccion');
+  reaccion.style = 'flex';
+  const songAlbum = document.getElementById('songAlbum');
+  songAlbum.innerHTML = song.album;
+  const songYear = document.getElementById('songYear');
+  songYear.innerHTML = song.year;
+  const songGender = document.getElementById('songGender');
+  songGender.innerHTML = song.gender;
+  // seccion botones inferior
+  const idSong = document.getElementById('idSong');
+  idSong.innerHTML = song.id;
   const artist = document.getElementById('artist');
   artist.innerHTML = song.artist;
   const actualSong = document.getElementById('song');
@@ -104,11 +124,17 @@ function playSongSelected(song) {
   currentTime.innerHTML = song.currentTime;
 }
 
+// evento que se llama desde la seccion canciones
 function handleIconClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
     playSongSelected(song);
   } else if (iconClass === 'fa fa-heart') {
-    alert('agregar a favoritos ' + song.title);
+    const list = document.getElementById('my_favorites');
+    // agregar a favoritos si no existe la cancion en la lista
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (!existeCancion) {
+      agregarAFavoritos(song, list);
+    }
   } else {
     const list = document.getElementById('my_playlist');
     // agregar al playlista si no existe la cancion en la lista
@@ -153,7 +179,7 @@ function agregarAFavoritos(song, list) {
     icon.id = song.id;
     icon.className = iconClass;
     // agregar evento
-    icon.addEventListener('click', () => handleIconPlayListClick(song, iconClass));
+    icon.addEventListener('click', () => handleIconFavoriteClick(song, iconClass));
     // agregar icono al li
     songElement.appendChild(icon);
   });
@@ -161,12 +187,17 @@ function agregarAFavoritos(song, list) {
   list.appendChild(songElement);
 }
 
-
+// evento que se llama desde la seccion playlist
 function handleIconPlayListClick(song, iconClass) {
   if (iconClass === 'fa fa-play-circle') {
     playSongSelected(song);
   } else if (iconClass === 'fa fa-heart') {
-    alert('agregar a favoritos ' + song.title);
+    const list = document.getElementById('my_favorites');
+    // agregar a favoritos si no existe la cancion en la lista
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (!existeCancion) {
+      agregarAFavoritos(song, list);
+    }
   } else {
     const list = document.getElementById('my_playlist');
     // eliminar del playlist
@@ -178,45 +209,119 @@ function handleIconPlayListClick(song, iconClass) {
   }
 }
 
+// evento que se llama desde la seccion favoritos
+function handleIconFavoriteClick(song, iconClass) {
+  if (iconClass === 'fa fa-play-circle') {
+    playSongSelected(song);
+  } else if (iconClass === 'fa fa-heart-o') {
+    const list = document.getElementById('my_favorites');
+    // eliminar de favoritos
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (existeCancion) {
+      // eliminar de la lista la cancion
+      list.removeChild(existeCancion);
+    }
+  } else {
+    const list = document.getElementById('my_playlist');
+    // agregar al playlista si no existe la cancion en la lista
+    let existeCancion = Array.from(list.children).find(child => child.id === song.id);
+    if (!existeCancion) {
+      agregarAPlayList(song, list);
+    }
+  }
+}
 
-const play = document.getElementById('play')
-const stop = document.getElementById('stop')
-const pause = document.getElementById('pause')
-const mute = document.getElementById('mute')
-const sound = document.getElementById('sound')
+// agregar a favoritos desde la seccion informacion
+function agregarAFavoritosDesdeInformacion() {
+  if (selectedSong) {
+    const list = document.getElementById('my_favorites');
+    // agregar a favoritos si no existe la cancion en la lista
+    let existeCancion = Array.from(list.children).find(child => child.id === selectedSong.id);
+    if (!existeCancion) {
+      agregarAFavoritos(selectedSong, list);
+    }
+  }
+}
+
+const play = document.getElementById('play');
+const stop = document.getElementById('stop');
+const pause = document.getElementById('pause');
+const mute = document.getElementById('mute');
+const sound = document.getElementById('sound');
+const next = document.getElementById('next');
+const preview = document.getElementById('preview');
 
 play.addEventListener('click', () => {
-  audioMp3.play()
-})
+  if (audioMp3) {
+    audioMp3.play();
+  }
+});
 
 stop.addEventListener('click', () => {
-  audioMp3.pause();
-  audioMp3.currentTime = 0;
-})
-
+  if (audioMp3) {
+    audioMp3.pause();
+    audioMp3.currentTime = 0;
+  }
+});
 
 pause.addEventListener('click', () => {
-  audioMp3.pause()
-})
+  if (audioMp3) {
+    audioMp3.pause();
+  }
+});
 
 mute.addEventListener('click', () => {
-  audioMp3.volume = 0
-})
+  if (audioMp3) {
+    audioMp3.volume = 0;
+  }
+});
 
 sound.addEventListener('click', () => {
-  audioMp3.volume = audioMp3.volume + 0.1;
-})
+  if (audioMp3) {
+    audioMp3.volume = 0.5;
+  }
+});
 
-// search.addEventListener('click', () => {
-//   audio.src = input.value
-// })
+next.addEventListener('click', () => {
+  if (selectedSong) {
+    // buscar la posicion del arreglo
+    const index = SONGS.findIndex(song => song.id === selectedSong.id);
+    // si no encuentra la cancion devuelve -1
+    if (index !== -1) {
+      let indexTemp;
+      if (index === SONGS.length - 1) { // obtiene la ultima posicion del arreglo
+        indexTemp = 0;
+      } else {
+        indexTemp = index + 1;
+      }
+      prevNextSongSelected(indexTemp);
+    }
+  }
+});
 
-// audio.addEventListener('ended', () => {
-//   alert('siguiente')
-//   audio.src = 'https://cdn.pixabay.com/audio/2024/01/16/audio_e2b992254f.mp3'
-//   audio.play()
-// });
+preview.addEventListener('click', () => {
+  if (selectedSong) {
+    // buscar la posicion del arreglo
+    const index = SONGS.findIndex(song => song.id === selectedSong.id);
+    if (index !== -1) {
+      let indexTemp;
+      if (index === 0) {
+        indexTemp = SONGS.length - 1; // obtiene la ultima posicion del arreglo
+      } else {
+        indexTemp = index - 1;
+      }
+      // index === 0 ? SONGS.length - 1 : index - 1;
+      prevNextSongSelected(indexTemp);
+    }
+  }
+});
 
-// stop.addEventListener('click', () => {
-//   audio.stop
-// });
+function prevNextSongSelected(index) {
+  console.log(index);
+  if (index !== -1) {
+    let song = SONGS[index];
+    if (song) {
+      playSongSelected(song);
+    }
+  }
+}

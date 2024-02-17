@@ -35,11 +35,11 @@
       </div>
       <div class="music-list-container">
         <h1>My Playlist</h1>
-        <ul class="song-list-container" id="my_playlist"></ul>
+        <ul class="song-list" id="my_playlist"></ul>
       </div>
       <div class="music-list-container">
         <h1>Favoritos</h1>
-        <ul class="song-list-container"></ul>
+        <ul class="song-list" id="my_favorites"></ul>
       </div>
     </aside>
 
@@ -60,11 +60,9 @@
         </div>
         <div class="album-text">
           <div class="title">
-            <span>Información</span>
-
-            <h2 id="titlePlaylist">Álbum</h2>
-            <h2 id="titlePlaylist">Año</h2>
-            <h2 id="playDescription">Género</h2>
+            <h2 id="songAlbum"></h2>
+            <h2 id="songYear"></h2>
+            <h2 id="songGender"></h2>
           </div>
 
           <!-- <div class="description">
@@ -72,8 +70,8 @@
                         </div> -->
           <div class="acciones">
             <!-- <input type="file" id="files" name="files[]" multiple /> -->
-
-            <a href="#" class="btn reaccion-inactiva" id="reaccion"><i class="fas fa-heart"></i></a>
+            <a href="#" class="btn reaccion-inactiva" id="reaccion" style="display: none;"
+              onclick="agregarAFavoritosDesdeInformacion()"><i class="fas fa-heart"></i></a>
           </div>
         </div>
       </div>
@@ -81,7 +79,8 @@
       <div class="album-list-music">
         <ul class="list-music" id="lista-music">
           <li class="music">
-            <a href="#" id="play2" class="btn play-music"><i class="far fa-play-circle"></i></a>
+            <!-- <a href="#" id="play2" class="btn play-music" style="display: none;"><i class="far fa-play-circle"></i></a> -->
+            <h3 id="idSong"></h3>
             <h3 id="artist"></h3>
             <h3 class="name" id="song"></h3>
             <h3 class="time" id="currentTime"></h3>
